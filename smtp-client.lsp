@@ -21,8 +21,8 @@
 ;; --------------
 ;;
 ;; EHLO example.com\n
-;; MAIL FROM: John Doe <somebody@example.com>\n
-;; RCPT TO: Jane Doe <nobody@example.com>\n
+;; MAIL FROM: <somebody@example.com>\n
+;; RCPT TO: <nobody@example.com>\n
 ;; DATA.\n
 ;; Some message\n
 ;; .\n
@@ -31,7 +31,6 @@
 ;;-----------------------------------------------------------------------------
 
 ;; Vars
-
 (defvar dest)
 (defvar domain)
 (defvar from)
@@ -39,9 +38,7 @@
 (defvar subject)
 (defvar message)
 
-
 ;; Functions
-
 (defun prompt (line)
  "Display message and return input"
  (format t "~10A" line)
@@ -69,10 +66,6 @@
         (data (subseq buf 0 (read-buf-nonblock buf in))))
  (format t "+ ~S~%" (string-right-trim '(#\return #\linefeed) data))))
 
-
-
-;; Get Input
-
 ;; Destination
 (setq dest (prompt "DestHost:"))
 ;; EHLO domain\r\n
@@ -88,16 +81,13 @@
 (setq subject (prompt "Subject:"))
 (setq message (prompt "Message:"))
 
-
 ;; DEBUG print
 ;;(format t "~%~%--- To ~A:25 ---~%~%" dest)
 ;;(format t
 ;; "EHLO ~A~%MAIL FROM: <~A>~%RCPT TO: <~A>~%DATA~%Subject: ~A~%~A~%.~%QUIT~%"
 ;; domain from to subject message)
 
-
 ;; Start Socket
-
 (let ((s (make-instance 'inet-socket :type :stream :protocol :tcp))
       (dest-host (car (host-ent-addresses (get-host-by-name dest))))
       (line))
