@@ -12,8 +12,8 @@
 ;; Parts used from sbcl contrib/sb-bsd-sockets/tests.lisp
 ;; <https://github.com/sbcl/sbcl/blob/master/contrib/sb-bsd-sockets/tests.lisp>
 ;;
-;; Don't use this for anything serious; it does no error checking or anything.
-;; Just foolishly continues sending requests, regardless of status code.
+;; Don't use this for anything serious; it does basic error checking or anything.
+;; Throws an exception if status code does not match expected.
 ;;
 ;;-----------------------------------------------------------------------------
 ;;
